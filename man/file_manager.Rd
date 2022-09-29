@@ -4,26 +4,58 @@
 \alias{add_file_in_dir}
 \alias{edit_file_in_dir}
 \alias{suppress_file_in_dir}
+\alias{get_yaml_info}
 \title{Add / suppress / edit a file}
 \usage{
-add_file_in_dir(file, dir, yml, name, description = "")
+add_file_in_dir(
+  file,
+  dir,
+  yml,
+  name,
+  description = "",
+  date_time_format = "\%Y\%m\%d_\%H\%M\%s"
+)
 
-edit_file_in_dir(id, dir, yml, name = NULL, description = NULL, file = NULL)
+edit_file_in_dir(
+  id,
+  dir,
+  yml,
+  name = NULL,
+  description = NULL,
+  file = NULL,
+  date_time_format = "\%Y\%m\%d_\%H\%M\%s"
+)
 
 suppress_file_in_dir(id, dir, yml)
+
+get_yaml_info(
+  yml,
+  recorded_name = TRUE,
+  date_time_format = "\%Y\%m\%d_\%H\%M\%s",
+  add_img = FALSE,
+  img_size = 30
+)
 }
 \arguments{
 \item{file}{\code{character} file (to copy) path.}
 
 \item{dir}{\code{character} directory path.}
 
-\item{yml}{\code{character} yaml file path.}
+\item{yml}{\code{character} yaml configuration file full path.}
 
 \item{name}{\code{character} file name.}
 
 \item{description}{\code{character} file description.}
 
+\item{date_time_format}{\code{character} DateTime format.}
+
 \item{id}{\code{character} file id in yaml.}
+
+\item{recorded_name}{\code{logical} : add recorded name (with date_time extension) in output ?}
+
+\item{add_img}{\code{logical} : Use in shiny module for adding file extension img.}
+
+\item{img_size}{\code{integer} : Use in shiny module for adding file extension img.}
 }
 \value{
 These functions return a \code{logical} indicating if operation succeeded or not
@@ -44,7 +76,7 @@ file <- system.file("translate/translate.csv", package = "shinydrive")
 # add one first file
 add_file_in_dir(
   file = file,
-  dir= dir,
+  dir = dir,
   yml = yml,
   name = "translate1",
   description = ""
@@ -52,11 +84,12 @@ add_file_in_dir(
 
 yaml::yaml.load_file(yml)
 list.files(dir)
+get_yaml_info(yml)
 
 # add second file
 add_file_in_dir(
   file = file,
-  dir= dir,
+  dir = dir,
   yml = yml,
   name = "translate_2",
   description = "This is cool"
@@ -64,10 +97,13 @@ add_file_in_dir(
 
 yaml::yaml.load_file(yml)
 list.files(dir)
+get_yaml_info(yml, recorded_name = F)
 
 # modify first file
 edit_file_in_dir(
-  id = "2", dir = dir, yml = yml,
+  id = "2", 
+  dir = dir, 
+  yml = yml,
   name = "translate_2_mod",
   description = "So cool"
 )
