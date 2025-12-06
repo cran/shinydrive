@@ -11,9 +11,9 @@ add_file_in_dir(
   file,
   dir,
   yml,
-  name,
+  name = tools::file_path_sans_ext(basename(file)),
   description = "",
-  date_time_format = "\%Y\%m\%d_\%H\%M\%s"
+  date_time_format = "\%Y\%m\%d_\%H\%M\%S"
 )
 
 edit_file_in_dir(
@@ -23,7 +23,7 @@ edit_file_in_dir(
   name = NULL,
   description = NULL,
   file = NULL,
-  date_time_format = "\%Y\%m\%d_\%H\%M\%s"
+  date_time_format = "\%Y\%m\%d_\%H\%M\%S"
 )
 
 suppress_file_in_dir(id, dir, yml)
@@ -31,9 +31,10 @@ suppress_file_in_dir(id, dir, yml)
 get_yaml_info(
   yml,
   recorded_name = TRUE,
-  date_time_format = "\%Y\%m\%d_\%H\%M\%s",
+  date_time_format = "\%Y\%m\%d_\%H\%M\%S",
   add_img = FALSE,
-  img_size = 30
+  img_size = 30,
+  format_size = TRUE
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ get_yaml_info(
 \item{add_img}{\code{logical} : Use in shiny module for adding file extension img.}
 
 \item{img_size}{\code{integer} : Use in shiny module for adding file extension img.}
+
+\item{format_size}{\code{logical} : User-friendly size format ?}
 }
 \value{
 These functions return a \code{logical} indicating if operation succeeded or not
@@ -73,12 +76,11 @@ dir.create(dir)
 
 file <- system.file("translate/translate.csv", package = "shinydrive")
 
-# add one first file
+# add one first file with current name
 add_file_in_dir(
   file = file,
   dir = dir,
   yml = yml,
-  name = "translate1",
   description = ""
 )
 
@@ -86,7 +88,7 @@ yaml::yaml.load_file(yml)
 list.files(dir)
 get_yaml_info(yml)
 
-# add second file
+# add same file twice, changing name
 add_file_in_dir(
   file = file,
   dir = dir,

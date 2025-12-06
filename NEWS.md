@@ -1,3 +1,11 @@
+# shinydrive 0.1.5
+
+* Add size
+
+# shinydrive 0.1.4
+
+* Fast file checking
+
 # shinydrive 0.1.3
 
 * Update maintener e-mail
